@@ -1,0 +1,566 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:sensor-node-gamma
+LIBS:sensor-node-gamma-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "sensor-node-gamma"
+Date ""
+Rev "1"
+Comp "hochreiner.net"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L STM32L021K4T6 STM1
+U 1 1 5B8A611D
+P 7550 4550
+F 0 "STM1" H 8150 3800 60  0000 C CNN
+F 1 "STM32L021K4T6" H 7550 4550 60  0000 C CNN
+F 2 "Housings_QFP:LQFP-32_7x7mm_Pitch0.8mm" H 7550 4550 60  0001 C CNN
+F 3 "" H 7550 4550 60  0001 C CNN
+	1    7550 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C4
+U 1 1 5B8A635B
+P 6050 4750
+F 0 "C4" H 6075 4850 50  0000 L CNN
+F 1 "0.1µF" H 6075 4650 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 6088 4600 50  0001 C CNN
+F 3 "" H 6050 4750 50  0001 C CNN
+	1    6050 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C3
+U 1 1 5B8A6398
+P 5800 4750
+F 0 "C3" H 5825 4850 50  0000 L CNN
+F 1 "1µF" H 5825 4650 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5838 4600 50  0001 C CNN
+F 3 "" H 5800 4750 50  0001 C CNN
+	1    5800 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 4600 6650 4600
+Connection ~ 6050 4600
+Text Label 5550 4600 2    60   ~ 0
+3V3
+Connection ~ 5800 4600
+$Comp
+L GND #PWR01
+U 1 1 5B8A63EC
+P 5800 5050
+F 0 "#PWR01" H 5800 4800 50  0001 C CNN
+F 1 "GND" H 5800 4900 50  0000 C CNN
+F 2 "" H 5800 5050 50  0001 C CNN
+F 3 "" H 5800 5050 50  0001 C CNN
+	1    5800 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5800 4900 5800 5050
+Wire Wire Line
+	6050 4900 6050 4950
+Wire Wire Line
+	6050 4950 5800 4950
+Connection ~ 5800 4950
+$Comp
+L C C2
+U 1 1 5B8A9286
+P 5150 4800
+F 0 "C2" H 5175 4900 50  0000 L CNN
+F 1 "0.1µF" H 5175 4700 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5188 4650 50  0001 C CNN
+F 3 "" H 5150 4800 50  0001 C CNN
+	1    5150 4800
+	1    0    0    -1  
+$EndComp
+Text Label 4950 4650 3    60   ~ 0
+~SWD_RST
+$Comp
+L SW_Push SW1
+U 1 1 5B8A9447
+P 4550 4850
+F 0 "SW1" H 4600 4950 50  0000 L CNN
+F 1 "SW_Push" H 4550 4790 50  0000 C CNN
+F 2 "sensor-node-gamma:switch" H 4550 5050 50  0001 C CNN
+F 3 "" H 4550 5050 50  0001 C CNN
+	1    4550 4850
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6650 4500 4550 4500
+Wire Wire Line
+	4550 4500 4550 4650
+Wire Wire Line
+	4950 4650 4950 4500
+Connection ~ 4950 4500
+Wire Wire Line
+	5150 4650 5150 4500
+Connection ~ 5150 4500
+$Comp
+L GND #PWR02
+U 1 1 5B8A94F8
+P 4550 5300
+F 0 "#PWR02" H 4550 5050 50  0001 C CNN
+F 1 "GND" H 4550 5150 50  0000 C CNN
+F 2 "" H 4550 5300 50  0001 C CNN
+F 3 "" H 4550 5300 50  0001 C CNN
+	1    4550 5300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 5050 4550 5300
+Wire Wire Line
+	5150 4950 5150 5150
+Wire Wire Line
+	5150 5150 4550 5150
+Connection ~ 4550 5150
+$Comp
+L C C5
+U 1 1 5B8A9563
+P 6400 4050
+F 0 "C5" H 6425 4150 50  0000 L CNN
+F 1 "0.1µF" H 6425 3950 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 6438 3900 50  0001 C CNN
+F 3 "" H 6400 4050 50  0001 C CNN
+	1    6400 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C6
+U 1 1 5B8A95C2
+P 8600 5050
+F 0 "C6" H 8625 5150 50  0000 L CNN
+F 1 "0.1µF" H 8625 4950 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8638 4900 50  0001 C CNN
+F 3 "" H 8600 5050 50  0001 C CNN
+	1    8600 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C7
+U 1 1 5B8A95F7
+P 8900 5050
+F 0 "C7" H 8925 5150 50  0000 L CNN
+F 1 "10µF" H 8925 4950 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8938 4900 50  0001 C CNN
+F 3 "" H 8900 5050 50  0001 C CNN
+	1    8900 5050
+	1    0    0    -1  
+$EndComp
+Text Label 9250 4900 0    60   ~ 0
+3V3
+Text Label 6050 4200 2    60   ~ 0
+3V3
+$Comp
+L GND #PWR03
+U 1 1 5B8A96A7
+P 6050 3700
+F 0 "#PWR03" H 6050 3450 50  0001 C CNN
+F 1 "GND" H 6050 3550 50  0000 C CNN
+F 2 "" H 6050 3700 50  0001 C CNN
+F 3 "" H 6050 3700 50  0001 C CNN
+	1    6050 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR04
+U 1 1 5B8A975B
+P 8900 5450
+F 0 "#PWR04" H 8900 5200 50  0001 C CNN
+F 1 "GND" H 8900 5300 50  0000 C CNN
+F 2 "" H 8900 5450 50  0001 C CNN
+F 3 "" H 8900 5450 50  0001 C CNN
+	1    8900 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8450 4900 9250 4900
+Connection ~ 8600 4900
+Connection ~ 8900 4900
+Wire Wire Line
+	7900 5400 8900 5400
+Wire Wire Line
+	8900 5200 8900 5450
+Connection ~ 8900 5400
+Wire Wire Line
+	8600 5200 8600 5400
+Connection ~ 8600 5400
+Wire Wire Line
+	6050 4200 6650 4200
+Connection ~ 6400 4200
+Wire Wire Line
+	7200 3700 6050 3700
+Wire Wire Line
+	6400 3900 6400 3700
+Connection ~ 6400 3700
+Text Notes 6250 3500 2    60   ~ 12
+MCU
+$Comp
+L CORTEX-DEBUG CD1
+U 1 1 5B8A9A36
+P 9250 1800
+F 0 "CD1" H 9600 1350 60  0000 C CNN
+F 1 "CORTEX-DEBUG" V 9250 1800 60  0000 C CNN
+F 2 "sensor-node-gamma:CORTEX-DEBUG" H 9250 1800 60  0001 C CNN
+F 3 "" H 9250 1800 60  0001 C CNN
+	1    9250 1800
+	1    0    0    -1  
+$EndComp
+Text Label 8350 1600 2    60   ~ 0
+3V3
+Wire Wire Line
+	8350 1600 8600 1600
+$Comp
+L GND #PWR05
+U 1 1 5B8A9AD8
+P 8350 2100
+F 0 "#PWR05" H 8350 1850 50  0001 C CNN
+F 1 "GND" H 8350 1950 50  0000 C CNN
+F 2 "" H 8350 2100 50  0001 C CNN
+F 3 "" H 8350 2100 50  0001 C CNN
+	1    8350 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8350 2100 8350 1700
+Wire Wire Line
+	8350 1700 8600 1700
+Wire Wire Line
+	8600 1800 8350 1800
+Connection ~ 8350 1800
+Wire Wire Line
+	8600 2000 8350 2000
+Connection ~ 8350 2000
+Text Label 9900 1600 0    60   ~ 0
+SWD_IO
+Text Label 9900 1700 0    60   ~ 0
+SWD_CLK
+NoConn ~ 9900 1800
+Text Label 9900 2000 0    60   ~ 0
+~SWD_RST
+Text Notes 8200 1150 0    60   ~ 12
+SWD
+Text Notes 1850 1200 0    60   ~ 12
+Radio
+Text Notes 1750 6150 0    60   ~ 12
+Sensor
+$Comp
+L Si7006 SI1
+U 1 1 5B8A9EFC
+P 2700 6700
+F 0 "SI1" H 3000 6450 60  0000 C CNN
+F 1 "Si7006" H 2700 6700 60  0000 C CNN
+F 2 "sensor-node-gamma:Si7006" H 2700 6700 60  0001 C CNN
+F 3 "" H 2700 6700 60  0001 C CNN
+	1    2700 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR06
+U 1 1 5B8A9F45
+P 1950 6900
+F 0 "#PWR06" H 1950 6650 50  0001 C CNN
+F 1 "GND" H 1950 6750 50  0000 C CNN
+F 2 "" H 1950 6900 50  0001 C CNN
+F 3 "" H 1950 6900 50  0001 C CNN
+	1    1950 6900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 6900 1950 6700
+Wire Wire Line
+	1950 6700 2100 6700
+Text Label 3300 6700 0    60   ~ 0
+3V3
+Text Label 3300 6600 0    60   ~ 0
+I2C_SCL
+Text Label 2100 6600 2    60   ~ 0
+I2C_SDA
+$Comp
+L RFM98 RFM1
+U 1 1 5B8AA0A5
+P 3150 1800
+F 0 "RFM1" H 3350 1350 60  0000 C CNN
+F 1 "RFM98" V 3150 1800 60  0000 C CNN
+F 2 "sensor-node-gamma:RFM98" H 3150 1800 60  0001 C CNN
+F 3 "" H 3150 1800 60  0001 C CNN
+	1    3150 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR07
+U 1 1 5B8AA0E8
+P 2450 2300
+F 0 "#PWR07" H 2450 2050 50  0001 C CNN
+F 1 "GND" H 2450 2150 50  0000 C CNN
+F 2 "" H 2450 2300 50  0001 C CNN
+F 3 "" H 2450 2300 50  0001 C CNN
+	1    2450 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 2300 2450 1450
+Wire Wire Line
+	2450 1450 2600 1450
+Wire Wire Line
+	2600 2150 2450 2150
+Connection ~ 2450 2150
+$Comp
+L C C1
+U 1 1 5B8AA17D
+P 4300 1900
+F 0 "C1" H 4325 2000 50  0000 L CNN
+F 1 "0.1µF" H 4325 1800 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 4338 1750 50  0001 C CNN
+F 3 "" H 4300 1900 50  0001 C CNN
+	1    4300 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 1750 4550 1750
+Wire Wire Line
+	4300 2050 3700 2050
+$Comp
+L GND #PWR08
+U 1 1 5B8AA260
+P 4300 2300
+F 0 "#PWR08" H 4300 2050 50  0001 C CNN
+F 1 "GND" H 4300 2150 50  0000 C CNN
+F 2 "" H 4300 2300 50  0001 C CNN
+F 3 "" H 4300 2300 50  0001 C CNN
+	1    4300 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 2300 4300 2050
+Text Label 4550 1750 0    60   ~ 0
+3V3
+Connection ~ 4300 1750
+$Comp
+L Antenna AE1
+U 1 1 5B8AA3C7
+P 3950 2500
+F 0 "AE1" H 3875 2575 50  0000 R CNN
+F 1 "Antenna" H 3875 2500 50  0000 R CNN
+F 2 "sensor-node-gamma:ANT1204F002R0433A" H 3950 2500 50  0001 C CNN
+F 3 "" H 3950 2500 50  0001 C CNN
+	1    3950 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 2150 3800 2150
+Wire Wire Line
+	3800 2150 3800 2700
+Wire Wire Line
+	3800 2700 3950 2700
+Text Label 2500 4050 2    60   ~ 0
+3V3
+$Comp
+L GND #PWR09
+U 1 1 5B8AA8DC
+P 2500 4450
+F 0 "#PWR09" H 2500 4200 50  0001 C CNN
+F 1 "GND" H 2500 4300 50  0000 C CNN
+F 2 "" H 2500 4450 50  0001 C CNN
+F 3 "" H 2500 4450 50  0001 C CNN
+	1    2500 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2500 4450 2500 4350
+Text Notes 2300 3850 0    60   ~ 12
+Battery
+Text Label 7800 3700 1    60   ~ 0
+SPI_SCK
+Text Label 7700 3700 1    60   ~ 0
+SPI_MISO
+Text Label 7600 3700 1    60   ~ 0
+SPI_MOSI
+Text Label 2300 1550 2    60   ~ 0
+SPI_MISO
+Text Label 2300 1650 2    60   ~ 0
+SPI_MOSI
+Text Label 2300 1750 2    60   ~ 0
+SPI_SCK
+Wire Wire Line
+	2300 1550 2600 1550
+Wire Wire Line
+	2300 1650 2600 1650
+Wire Wire Line
+	2300 1750 2600 1750
+Text Label 2300 1850 2    60   ~ 0
+SPI_NSS
+Text Label 2300 1950 2    60   ~ 0
+RFM_RESET
+Wire Wire Line
+	2300 1850 2600 1850
+Wire Wire Line
+	2300 1950 2600 1950
+Text Label 7500 3700 1    60   ~ 0
+RFM_RESET
+Text Label 7900 3700 1    60   ~ 0
+SPI_NSS
+Text Label 2300 2050 2    60   ~ 0
+RFM_DIO5
+Text Label 3700 1450 0    60   ~ 0
+RFM_DIO2
+Text Label 3700 1550 0    60   ~ 0
+RFM_DIO1
+Text Label 3700 1650 0    60   ~ 0
+RFM_DIO0
+Text Label 3700 1850 0    60   ~ 0
+RFM_DIO4
+Text Label 3700 1950 0    60   ~ 0
+RFM_DIO3
+Wire Wire Line
+	2300 2050 2600 2050
+Text Label 8450 4200 0    60   ~ 0
+SWD_CLK
+Text Label 8450 4300 0    60   ~ 0
+SWD_IO
+Text Label 9900 4600 0    60   ~ 0
+I2C_SDA
+Text Label 9900 4700 0    60   ~ 0
+I2C_SCL
+Text Label 7200 5400 3    60   ~ 0
+RFM_DIO2
+Text Label 7300 5400 3    60   ~ 0
+RFM_DIO1
+Text Label 7400 5400 3    60   ~ 0
+RFM_DIO0
+Text Label 7500 5400 3    60   ~ 0
+RFM_DIO4
+Text Label 7600 5400 3    60   ~ 0
+RFM_DIO3
+Text Label 7700 5400 3    60   ~ 0
+RFM_DIO5
+$Comp
+L R R1
+U 1 1 5B8AD2F6
+P 7300 3450
+F 0 "R1" V 7380 3450 50  0000 C CNN
+F 1 "10k" V 7300 3450 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 7230 3450 50  0001 C CNN
+F 3 "" H 7300 3450 50  0001 C CNN
+	1    7300 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR010
+U 1 1 5B8AD35A
+P 7300 3150
+F 0 "#PWR010" H 7300 2900 50  0001 C CNN
+F 1 "GND" H 7300 3000 50  0000 C CNN
+F 2 "" H 7300 3150 50  0001 C CNN
+F 3 "" H 7300 3150 50  0001 C CNN
+	1    7300 3150
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7300 3300 7300 3150
+Wire Wire Line
+	7300 3600 7300 3700
+$Comp
+L R R2
+U 1 1 5B8ADA37
+P 9650 4450
+F 0 "R2" V 9730 4450 50  0000 C CNN
+F 1 "R" V 9650 4450 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9580 4450 50  0001 C CNN
+F 3 "" H 9650 4450 50  0001 C CNN
+	1    9650 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 5B8ADA8E
+P 9650 4850
+F 0 "R3" V 9730 4850 50  0000 C CNN
+F 1 "R" V 9650 4850 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9580 4850 50  0001 C CNN
+F 3 "" H 9650 4850 50  0001 C CNN
+	1    9650 4850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8450 4700 9900 4700
+Wire Wire Line
+	8450 4600 9900 4600
+Connection ~ 9650 4700
+Connection ~ 9650 4600
+Text Label 9700 5150 0    60   ~ 0
+3V3
+Text Label 9700 4200 0    60   ~ 0
+3V3
+Wire Wire Line
+	9650 4300 9650 4200
+Wire Wire Line
+	9650 4200 9700 4200
+Wire Wire Line
+	9650 5000 9650 5150
+Wire Wire Line
+	9650 5150 9700 5150
+NoConn ~ 7800 5400
+NoConn ~ 8450 4800
+NoConn ~ 8450 4500
+NoConn ~ 8450 4400
+NoConn ~ 6650 4300
+NoConn ~ 6650 4400
+NoConn ~ 6650 4700
+NoConn ~ 6650 4800
+NoConn ~ 6650 4900
+NoConn ~ 7400 3700
+$Comp
+L Custom_Battery BT1
+U 1 1 5B8B9586
+P 2500 4250
+F 0 "BT1" H 2600 4350 50  0000 L CNN
+F 1 "Custom_Battery" H 2600 4250 50  0000 L CNN
+F 2 "sensor-node-gamma:HU2032-LF" V 2500 4310 50  0001 C CNN
+F 3 "" V 2500 4310 50  0001 C CNN
+	1    2500 4250
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
