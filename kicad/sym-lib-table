@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name sensor-node-gamma)(type Legacy)(uri ${KIPRJMOD}/sensor-node-gamma.lib)(options "")(descr ""))
+)
