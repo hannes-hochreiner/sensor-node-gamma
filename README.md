@@ -42,7 +42,7 @@ about 30 y of sleep
 ## Effort
   * system design: 1.5 h
   * circuit design: 2.5 h
-  * pcb layout: 2.5 h
+  * pcb layout: 4.75 h
 
 ## TODOs
   * check all custom components and footprints
