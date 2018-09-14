@@ -2,7 +2,7 @@
 
 ## Core parts
 
-### STM32
+### MCU
   * manufacturer: STMicroelectronics
   * manufacturer id: STM32L021K4T6
   * digi-key id: [497-17903-ND](https://www.digikey.de/product-detail/de/stmicroelectronics/STM32L021K4T6/497-17903-ND)
@@ -10,34 +10,34 @@
   * sleep current: 0.54 µA
   * price: 1.87 EUR
 
-### RFM98
-  * manufacturer: Seeed Technology Co., Ltd
-  * manufacturer id: 109990165
-  * digi-key id: [1597-1491-ND](https://www.digikey.de/product-detail/de/seeed-technology-co-ltd/109990165/1597-1491-ND)
-  * [datasheet](https://github.com/SeeedDocument/RFM95-98_LoRa_Module/blob/master/RFM95_96_97_98_DataSheet.pdf)
-  * sleep current: 0.2 µA
-  * price: 6.05 EUR
-
-### Si7006
+### transmitter
   * manufacturer: Silicon Labs
-  * manufacturer id: SI7006-A20-IM
-  * digi-key id: [336-3124-ND](https://www.digikey.de/product-detail/de/silicon-labs/SI7006-A20-IM/336-3124-ND)
-  * [datasheet](https://www.silabs.com/Support%20Documents%2fTechnicalDocs%2fSi7006-A20.pdf)
-  * sleep current: 0.06 µA
-  * price: 1.74 EUR
+  * manufacturer id: SI4012-C1001GTR
+  * digi-key id: [336-4153-1-ND](https://www.digikey.de/product-detail/de/silicon-labs/SI4012-C1001GTR/336-4153-1-ND/7650432)
+  * [datasheet](http://www.silabs.com/documents/public/data-sheets/Si4012.pdf)
+  * sleep current: 0.01 µA
+  * price: 0.89 EUR
 
-### Antenna
-  * manufacturer: Yageo
-  * manufacturer id: ANT1204F002R0433A
-  * digi-key id: [311-1570-1-ND](https://www.digikey.de/product-detail/de/yageo/ANT1204F002R0433A/311-1570-1-ND)
-  * [datasheet](http://www.yageo.com/documents/recent/An_SMD_UHF_433_1204_0.pdf)
-  * price: 1.38 EUR
+### sensor
+  * manufacturer: Sensirion AG
+  * manufacturer id: SHTC3
+  * digi-key id: [1649-1105-1-ND](https://www.digikey.de/product-detail/de/sensirion-ag/SHTC3/1649-1105-1-ND/9477852)
+  * [datasheet](https://media.digikey.com/pdf/Data%20Sheets/Sensirion%20PDFs/SHTC3_Prelim.pdf)
+  * sleep current: 0.3 µA
+  * price: 3.67 EUR
+
+### antenna
+  * manufacturer: Linx Technologies Inc.
+  * manufacturer id: ANT-433-SP
+  * digi-key id: [ANT-433-SP-ND](https://www.digikey.de/product-detail/de/linx-technologies-inc/ANT-433-SP/ANT-433-SP-ND/1679578)
+  * [datasheet](https://linxtechnologies.com/wp/wp-content/uploads/ant-433-sp.pdf)
+  * price: 2.07 EUR
 
 ## Power consumption
 
 ### Sleep
 
-about 0.8 µA
+about 0.85 µA
 
 CR2032: about 230 mAh
 
@@ -47,7 +47,7 @@ about 30 y of sleep
 
   * PCB: 7.50 EUR
 
-price of the main components: 18.54 EUR
+price of the main components: 16 EUR
 
 ## Effort
   * system design: 1.5 h
