@@ -297,17 +297,6 @@ Wire Wire Line
 Wire Wire Line
 	8450 4900 8600 4900
 $Comp
-L Device:Antenna AE1
-U 1 1 5B8EF315
-P 1300 2100
-F 0 "AE1" H 1380 2091 50  0000 L CNN
-F 1 "Antenna" H 1380 2000 50  0000 L CNN
-F 2 "sensor-node-gamma:ANT1204F002R0433A" H 1300 2100 50  0001 C CNN
-F 3 "~" H 1300 2100 50  0001 C CNN
-	1    1300 2100
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:C C1
 U 1 1 5B8EF44C
 P 4850 2300
@@ -785,4 +774,28 @@ Text Label 6250 1750 0    60   ~ 0
 I2C_SDA
 Text Label 6250 1850 0    60   ~ 0
 I2C_SCL
+$Comp
+L Device:Antenna_Chip AE1
+U 1 1 5B9CE6C3
+P 1400 2200
+F 0 "AE1" H 1579 2328 50  0000 L CNN
+F 1 "Antenna_Chip" H 1579 2237 50  0000 L CNN
+F 2 "" H 1300 2375 50  0001 C CNN
+F 3 "~" H 1300 2375 50  0001 C CNN
+	1    1400 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR07
+U 1 1 5B9D49E0
+P 1500 2400
+F 0 "#PWR07" H 1500 2150 50  0001 C CNN
+F 1 "GND" H 1500 2250 50  0000 C CNN
+F 2 "" H 1500 2400 50  0001 C CNN
+F 3 "" H 1500 2400 50  0001 C CNN
+	1    1500 2400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 2400 1500 2300
 $EndSCHEMATC
