@@ -249,8 +249,6 @@ Wire Wire Line
 	9650 5150 9700 5150
 NoConn ~ 7800 5400
 NoConn ~ 8450 4800
-NoConn ~ 8450 4500
-NoConn ~ 8450 4400
 NoConn ~ 6650 4300
 NoConn ~ 6650 4400
 NoConn ~ 6650 4700
@@ -759,14 +757,6 @@ NoConn ~ 7500 5400
 NoConn ~ 7400 5400
 NoConn ~ 7300 5400
 NoConn ~ 7200 5400
-Wire Wire Line
-	7500 3700 7500 2050
-Wire Wire Line
-	7500 2050 6250 2050
-Wire Wire Line
-	6250 1950 7600 1950
-Wire Wire Line
-	7600 1950 7600 3700
 NoConn ~ 7700 3700
 NoConn ~ 7800 3700
 NoConn ~ 7900 3700
@@ -780,7 +770,7 @@ U 1 1 5B9CE6C3
 P 1400 2200
 F 0 "AE1" H 1579 2328 50  0000 L CNN
 F 1 "Antenna_Chip" H 1579 2237 50  0000 L CNN
-F 2 "" H 1300 2375 50  0001 C CNN
+F 2 "sensor-node-gamma:ANT-433-SP" H 1300 2375 50  0001 C CNN
 F 3 "~" H 1300 2375 50  0001 C CNN
 	1    1400 2200
 	1    0    0    -1  
@@ -798,4 +788,14 @@ F 3 "" H 1500 2400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	1500 2400 1500 2300
+Text Label 6250 1950 0    50   ~ 0
+RFM_ENABLE
+Text Label 6250 2050 0    50   ~ 0
+~RFM_IRQ
+NoConn ~ 7500 3700
+NoConn ~ 7600 3700
+Text Label 8450 4400 0    50   ~ 0
+~RFM_IRQ
+Text Label 8450 4500 0    50   ~ 0
+RFM_ENABLE
 $EndSCHEMATC

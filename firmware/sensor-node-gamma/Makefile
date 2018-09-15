@@ -40,7 +40,6 @@ Src/main.c \
 Src/gpio.c \
 Src/aes.c \
 Src/i2c.c \
-Src/spi.c \
 Src/stm32l0xx_it.c \
 Src/stm32l0xx_hal_msp.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_gpio.c \
@@ -48,7 +47,6 @@ Src/stm32l0xx_hal_msp.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cryp_ex.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_i2c.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_dma.c \
-/home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_spi.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_rcc.c \

@@ -41,7 +41,6 @@
 #include "stm32l0xx_hal.h"
 #include "aes.h"
 #include "i2c.h"
-#include "spi.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -98,7 +97,6 @@ int main(void)
   MX_GPIO_Init();
   MX_AES_Init();
   MX_I2C1_Init();
-  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
