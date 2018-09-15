@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 9)
+    (drawings 13)
     (tracks 161)
     (zones 0)
     (modules 44)
@@ -1626,6 +1626,10 @@
     (pad 1 thru_hole circle (at 1.166726 -1.166726) (size 0.7 0.7) (drill 0.4) (layers *.Cu *.Mask))
   )
 
+  (gr_circle (center 152.05 105.8) (end 152.3 105.95) (layer F.SilkS) (width 0.2))
+  (gr_line (start 154.4 114.45) (end 153.3 114.45) (layer F.SilkS) (width 0.2))
+  (gr_line (start 154.4 113.3) (end 154.4 114.45) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 169.1 110.85) (end 169.35 111.3) (layer F.SilkS) (width 0.2))
   (gr_text "hochreiner.net\nsensor-node-gamma\nV1.1.0" (at 159.95 100.225) (layer B.SilkS) (tstamp 5B9CC2CC)
     (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
   )
