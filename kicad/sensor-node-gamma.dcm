@@ -1,20 +1,15 @@
 EESchema-DOCLIB  Version 2.0
 #
-$CMP Battery
-D single battery cell
-$ENDCMP
-#
-$CMP Battery_Cell
-D battery
-K battery cell
-$ENDCMP
-#
 $CMP Custom_Battery
 D single battery cell
 $ENDCMP
 #
 $CMP RFM98
 F https://github.com/SeeedDocument/RFM95-98_LoRa_Module/blob/master/RFM95_96_97_98_DataSheet.pdf
+$ENDCMP
+#
+$CMP SI4012
+D RF transmitter
 $ENDCMP
 #
 #End Doc Library
