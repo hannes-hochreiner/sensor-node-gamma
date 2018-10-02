@@ -147,10 +147,10 @@ int main(void)
 
     status = HAL_CRCEx_Polynomial_Set(&hcrc, 0x31, CRC_POLYLENGTH_8B);
 
-    volatile uint32_t crcTempCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values, 2);
+    volatile uint32_t crcTempCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values[0], 2);
     volatile uint32_t crcTempTrans = (uint32_t)values[2];
 
-    volatile uint32_t crcHumCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values + 3, 2);
+    volatile uint32_t crcHumCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values[3], 2);
     volatile uint32_t crcHumTrans = (uint32_t)values[5];
 
   /* USER CODE END WHILE */
