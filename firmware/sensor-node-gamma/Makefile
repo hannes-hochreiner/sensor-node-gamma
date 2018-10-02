@@ -40,6 +40,7 @@ Src/main.c \
 Src/gpio.c \
 Src/aes.c \
 Src/i2c.c \
+Src/crc.c \
 Src/stm32l0xx_it.c \
 Src/stm32l0xx_hal_msp.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_gpio.c \
@@ -65,6 +66,9 @@ Src/stm32l0xx_hal_msp.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c \
 /home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c \
+/home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_smbus.c \
+/home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c \
+/home/hannes/STM32Cube/Repository/STM32Cube_FW_L0_V1.10.0/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c \
 Src/system_stm32l0xx.c  
 
 # ASM sources

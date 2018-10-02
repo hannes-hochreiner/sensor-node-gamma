@@ -40,6 +40,7 @@
 #include "main.h"
 #include "stm32l0xx_hal.h"
 #include "aes.h"
+#include "crc.h"
 #include "i2c.h"
 #include "gpio.h"
 
@@ -97,14 +98,60 @@ int main(void)
   MX_GPIO_Init();
   MX_AES_Init();
   MX_I2C1_Init();
+  MX_CRC_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_I2C_Init(&hi2c1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    // LL_GPIO_ResetOutputPin(RFM_ENABLE_GPIO_Port, RFM_ENABLE_Pin);
+    LL_GPIO_SetOutputPin(RFM_ENABLE_GPIO_Port, RFM_ENABLE_Pin);
+
+    volatile HAL_StatusTypeDef status;
+    status = HAL_I2C_IsDeviceReady(&hi2c1, 0xE0, 10, 1000);
+    // status = HAL_SMBUS_IsDeviceReady(&hsmbus1, 0xE0, 10, 1000);
+
+    // reset
+    // uint8_t comReset[] = {0x06};
+    // status = HAL_I2C_Master_Transmit(&hi2c1, 0x00, comReset, 1, 1000);
+
+    // if (status != HAL_OK) {
+    //   volatile uint32_t errorCode = HAL_I2C_GetError(&hi2c1);
+    //   volatile int tmp = 5;
+    // }
+    // HAL_Delay(1);
+
+    // uint8_t comSleep[] = {0xB0, 0x98};
+    // status = HAL_I2C_Master_Transmit(&hi2c1, 0xE0, comSleep, 2, 1000);
+    // HAL_Delay(1);
+
+    uint8_t comWake[] = {0x35, 0x17};
+    status = HAL_I2C_Master_Transmit(&hi2c1, 0xE0, comWake, 2, 1000);
+    // HAL_Delay(1);
+    LL_mDelay(1);
+
+    uint8_t comMeas[] = {0x7C, 0xA2};
+    status = HAL_I2C_Master_Transmit(&hi2c1, 0xE0, comMeas, 2, 1000);
+    
+    uint8_t values[6];
+    status = HAL_I2C_Master_Receive(&hi2c1, 0xE0, values, 6, 1000);
+
+    uint8_t comSleep[] = {0xB0, 0x98};
+    status = HAL_I2C_Master_Transmit(&hi2c1, 0x70, comSleep, 2, 1000);
+
+    volatile uint16_t valueTemp = ((uint16_t)values[0] << 8) + (uint16_t)values[1];
+    volatile uint16_t valueHum = ((uint16_t)values[3] << 8) + (uint16_t)values[4];
+
+    status = HAL_CRCEx_Polynomial_Set(&hcrc, 0x31, CRC_POLYLENGTH_8B);
+
+    volatile uint32_t crcTempCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values, 2);
+    volatile uint32_t crcTempTrans = (uint32_t)values[2];
+
+    volatile uint32_t crcHumCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values + 3, 2);
+    volatile uint32_t crcHumTrans = (uint32_t)values[5];
 
   /* USER CODE END WHILE */
 
@@ -122,43 +169,50 @@ int main(void)
 void SystemClock_Config(void)
 {
 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
 
-  if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_0)
+  if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1)
   {
   Error_Handler();  
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
 
-  LL_RCC_MSI_Enable();
+  LL_RCC_HSI_Enable();
 
-   /* Wait till MSI is ready */
-  while(LL_RCC_MSI_IsReady() != 1)
+   /* Wait till HSI is ready */
+  while(LL_RCC_HSI_IsReady() != 1)
   {
     
   }
-  LL_RCC_MSI_SetRange(LL_RCC_MSIRANGE_5);
+  LL_RCC_HSI_SetCalibTrimming(16);
 
-  LL_RCC_MSI_SetCalibTrimming(0);
+  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_4, LL_RCC_PLL_DIV_2);
 
+  LL_RCC_PLL_Enable();
+
+   /* Wait till PLL is ready */
+  while(LL_RCC_PLL_IsReady() != 1)
+  {
+    
+  }
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
 
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_MSI);
+  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 
    /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_MSI)
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
   
   }
-  LL_Init1msTick(2097000);
+  LL_Init1msTick(32000000);
 
   LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
 
-  LL_SetSystemCoreClock(2097000);
+  LL_SetSystemCoreClock(32000000);
 
   LL_RCC_SetI2CClockSource(LL_RCC_I2C1_CLKSOURCE_PCLK1);
 
