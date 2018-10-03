@@ -145,14 +145,71 @@ int main(void)
     volatile uint16_t valueTemp = ((uint16_t)values[0] << 8) + (uint16_t)values[1];
     volatile uint16_t valueHum = ((uint16_t)values[3] << 8) + (uint16_t)values[4];
 
-    status = HAL_CRCEx_Polynomial_Set(&hcrc, 0x31, CRC_POLYLENGTH_8B);
+    CRC_Config_Sensor();
 
-    volatile uint32_t crcTempCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values[0], 2);
+    volatile uint32_t crcTempCalc = HAL_CRC_Calculate(&hcrc, (uint32_t*)&values[0], 2);
     volatile uint32_t crcTempTrans = (uint32_t)values[2];
 
-    volatile uint32_t crcHumCalc = HAL_CRC_Calculate(&hcrc, (uint32_t)&values[3], 2);
+    volatile uint32_t crcHumCalc = HAL_CRC_Calculate(&hcrc, (uint32_t*)&values[3], 2);
     volatile uint32_t crcHumTrans = (uint32_t)values[5];
 
+    //
+    // transmitter
+    //
+    LL_GPIO_ResetOutputPin(RFM_ENABLE_GPIO_Port, RFM_ENABLE_Pin);
+    LL_mDelay(100);
+
+    // properties to be set:
+    uint8_t transRes;
+    // PA_CONFIG (0x60): 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3 => 9 dBm
+    uint8_t comPaConfig[] = {0x11, 0x60, 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3};
+    TransmitterCommand(comPaConfig, 8, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
+    // TX_FREQ (0x40): 0x19, 0xDE, 0x64, 0x08 => 434.005 MHz
+    uint8_t comTxFreq[] = {0x11, 0x40, 0x19, 0xDE, 0x64, 0x08};
+    TransmitterCommand(comTxFreq, 6, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
+    // MODULATION_FSKDEV (0x20): 0x01, 0x04 => FSK, 5 kHz
+    uint8_t comModulationFskdev[] = {0x11, 0x20, 0x01, 0x04};
+    TransmitterCommand(comModulationFskdev, 4, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
+    // BITRATE_CONFIG (0x31): 0x00, 0x30, 0x04 => 4.8 kb/s
+    uint8_t comBitrateConfig[] = {0x11, 0x31, 0x00, 0x30, 0x04};
+    TransmitterCommand(comBitrateConfig, 5, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
+
+    // set fifo
+    uint8_t comSetFifo[] = {0x66, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0x46, 0xA5, 0xE3, 0x05, 0x48, 0x45, 0x4C, 0x4C, 0x4F, 0x00, 0x00};
+
+    // add crc calculation
+    CRC_Config_Transmitter();
+    uint32_t crcTrans = HAL_CRC_Calculate(&hcrc, (uint32_t*)&comSetFifo[19], 6);
+
+    comSetFifo[25] = (uint8_t)(crcTrans >> 8);
+    comSetFifo[26] = (uint8_t)crcTrans;
+
+    TransmitterCommand(comSetFifo, 27, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
+
+    uint8_t comTxStart[] = {0x62, 0x00, 0x10, 0x00, 0x00, 0x00};
+    uint8_t dataTxStart[2];
+    TransmitterCommand(comTxStart, 6, dataTxStart, 2);
+    if (dataTxStart[0] != 0x80) { Error_Handler(); }
+
+    uint8_t comGetIntStatus[] = {0x64};
+    uint8_t dataGetIntStatus[2];
+    volatile uint8_t pkgSent = 0;
+
+    while (pkgSent != 8) {
+      LL_mDelay(50);
+      dataGetIntStatus[1] = 0;
+      TransmitterCommand(comGetIntStatus, 1, dataGetIntStatus, 2);
+      if (dataGetIntStatus[0] != 0x80) { Error_Handler(); }
+      pkgSent = dataGetIntStatus[1] & 0x08;
+    }
+
+    LL_GPIO_ResetOutputPin(RFM_ENABLE_GPIO_Port, RFM_ENABLE_Pin);
+    LL_mDelay(500);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -221,7 +278,50 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void CRC_Config_Sensor() {
+  HAL_CRC_DeInit(&hcrc);
+  hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_DISABLE;
+  hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_DISABLE;
+  hcrc.Init.GeneratingPolynomial = 0x31;
+  hcrc.Init.CRCLength = CRC_POLYLENGTH_8B;
+  hcrc.Init.InitValue = 0xFF;
+  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
+  HAL_CRC_Init(&hcrc);
+}
 
+void CRC_Config_Transmitter() {
+  HAL_CRC_DeInit(&hcrc);
+  hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_DISABLE;
+  hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_DISABLE;
+  hcrc.Init.GeneratingPolynomial = 0x1D0F;
+  hcrc.Init.CRCLength = CRC_POLYLENGTH_16B;
+  hcrc.Init.InitValue = 0x1D0F;
+  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
+  HAL_CRC_Init(&hcrc);
+}
+
+void TransmitterCommand(uint8_t* comBuf, uint8_t comLen, uint8_t* resBuf, uint8_t resLen) {
+  volatile HAL_StatusTypeDef status = HAL_OK;
+
+  status = HAL_I2C_Master_Transmit(&hi2c1, 0xE0, comBuf, comLen, 1000);
+
+  if (status != HAL_OK) {
+    volatile uint32_t error = HAL_I2C_GetError(&hi2c1);
+    Error_Handler();
+  }
+
+  status = HAL_I2C_Master_Receive(&hi2c1, 0xE0, resBuf, resLen, 1000);
+
+  for (uint8_t cntr = 0; cntr < 15 && status != HAL_OK; cntr++) {
+    LL_mDelay(10);
+    status = HAL_I2C_Master_Receive(&hi2c1, 0xE0, resBuf, resLen, 1000);
+  }
+
+  if (status != HAL_OK) {
+    volatile uint32_t error = HAL_I2C_GetError(&hi2c1);
+    Error_Handler();
+  }
+}
 /* USER CODE END 4 */
 
 /**

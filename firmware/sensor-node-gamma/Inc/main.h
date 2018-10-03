@@ -73,7 +73,9 @@
 /* #define USE_FULL_ASSERT    1U */
 
 /* USER CODE BEGIN Private defines */
-
+void CRC_Config_Sensor();
+void CRC_Config_Transmitter();
+void TransmitterCommand(uint8_t* comBuf, uint8_t comLen, uint8_t* resBuf, uint8_t resLen);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
