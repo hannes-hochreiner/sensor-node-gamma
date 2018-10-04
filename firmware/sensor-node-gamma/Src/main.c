@@ -161,6 +161,10 @@ int main(void)
 
     // properties to be set:
     uint8_t transRes;
+    // CHIP_CONFIG (0x10): 0x00
+    uint8_t comChipConfig[] = {0x11, 0x10, 0x00};
+    TransmitterCommand(comChipConfig, 3, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
     // PA_CONFIG (0x60): 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3 => 9 dBm
     uint8_t comPaConfig[] = {0x11, 0x60, 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3};
     TransmitterCommand(comPaConfig, 8, &transRes, 1);
@@ -179,16 +183,16 @@ int main(void)
     if (transRes != 0x80) { Error_Handler(); }
 
     // set fifo
-    uint8_t comSetFifo[] = {0x66, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0x46, 0xA5, 0xE3, 0x05, 0x48, 0x45, 0x4C, 0x4C, 0x4F, 0x00, 0x00};
+    uint8_t comSetFifo[] = {0x66, 0xAA, 0xAA, 0xAA, 0x46, 0xA5, 0xE3, 0x05, 0x48, 0x45, 0x4C, 0x4C, 0x4F, 0x00, 0x00};
 
     // add crc calculation
     CRC_Config_Transmitter();
-    uint32_t crcTrans = HAL_CRC_Calculate(&hcrc, (uint32_t*)&comSetFifo[19], 6);
+    uint32_t crcTrans = HAL_CRC_Calculate(&hcrc, (uint32_t*)&comSetFifo[7], 6);
 
-    comSetFifo[25] = (uint8_t)(crcTrans >> 8);
-    comSetFifo[26] = (uint8_t)crcTrans;
+    comSetFifo[13] = (uint8_t)(crcTrans >> 8);
+    comSetFifo[14] = (uint8_t)crcTrans;
 
-    TransmitterCommand(comSetFifo, 27, &transRes, 1);
+    TransmitterCommand(comSetFifo, 15, &transRes, 1);
     if (transRes != 0x80) { Error_Handler(); }
 
     uint8_t comTxStart[] = {0x62, 0x00, 0x10, 0x00, 0x00, 0x00};
