@@ -166,7 +166,8 @@ int main(void)
     TransmitterCommand(comChipConfig, 3, &transRes, 1);
     if (transRes != 0x80) { Error_Handler(); }
     // PA_CONFIG (0x60): 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3 => 9 dBm
-    uint8_t comPaConfig[] = {0x11, 0x60, 0x00, 0x4D, 0x00, 0x19, 0x7D, 0xF3};
+    // PA_CONFIG (0x60): 0x01, 0x47, 0x00, 0x19, 0x7D, 0xF3 => 10 dBm
+    uint8_t comPaConfig[] = {0x11, 0x60, 0x01, 0x47, 0x00, 0x19, 0x7D, 0xF3};
     TransmitterCommand(comPaConfig, 8, &transRes, 1);
     if (transRes != 0x80) { Error_Handler(); }
     // TX_FREQ (0x40): 0x19, 0xDF, 0x13, 0xD0 => 434.050 MHz
@@ -181,18 +182,38 @@ int main(void)
     uint8_t comBitrateConfig[] = {0x11, 0x31, 0x00, 0x30, 0x04};
     TransmitterCommand(comBitrateConfig, 5, &transRes, 1);
     if (transRes != 0x80) { Error_Handler(); }
+    // OPTIONAL: CHANGE_STATE (0x60): 0x00, 0x02 => idle, tune
+    uint8_t comChangeState[] = {0x60, 0x00, 0x02};
+    TransmitterCommand(comChangeState, 3, &transRes, 1);
+    if (transRes != 0x80) { Error_Handler(); }
 
     // set fifo
-    uint8_t comSetFifo[] = {0x66, 0xAA, 0xAA, 0xAA, 0x46, 0xA5, 0xE3, 0x05, 0x48, 0x45, 0x4C, 0x4C, 0x4F, 0x00, 0x00};
+    uint8_t preambleLength = 10;
+    uint8_t preambleCharacter = 0xAA;
+    uint8_t messageData[] = {0x48, 0x45, 0x4C, 0x4C, 0x4F};
+    uint8_t messageLength = 5;
+    uint8_t comSetFifo[1 + preambleLength + 1 + messageLength + 2];
+    
+    comSetFifo[0] = 0x66;
+
+    for (uint8_t cntr = 0; cntr < preambleLength; cntr++) {
+      comSetFifo[cntr + 1] = preambleCharacter;
+    }
+
+    comSetFifo[1 + preambleLength] = messageLength;
+
+    for (uint8_t cntr = 0; cntr < messageLength; cntr++) {
+      comSetFifo[2 + preambleLength + cntr] = messageData[cntr];
+    }
 
     // add crc calculation
     CRC_Config_Transmitter();
     uint32_t crcTrans = HAL_CRC_Calculate(&hcrc, (uint32_t*)&comSetFifo[7], 6);
 
-    comSetFifo[13] = (uint8_t)(crcTrans >> 8);
-    comSetFifo[14] = (uint8_t)crcTrans;
+    comSetFifo[2 + preambleLength + messageLength] = (uint8_t)(crcTrans >> 8);
+    comSetFifo[2 + preambleLength + messageLength + 1] = (uint8_t)crcTrans;
 
-    TransmitterCommand(comSetFifo, 15, &transRes, 1);
+    TransmitterCommand(comSetFifo, 4 + preambleLength + messageLength, &transRes, 1);
     if (transRes != 0x80) { Error_Handler(); }
 
     uint8_t comTxStart[] = {0x62, 0x00, 0x10, 0x00, 0x00, 0x00};
@@ -205,7 +226,7 @@ int main(void)
     volatile uint8_t pkgSent = 0;
 
     while (pkgSent != 8) {
-      LL_mDelay(50);
+      LL_mDelay(30);
       dataGetIntStatus[1] = 0;
       TransmitterCommand(comGetIntStatus, 1, dataGetIntStatus, 2);
       if (dataGetIntStatus[0] != 0x80) { Error_Handler(); }
