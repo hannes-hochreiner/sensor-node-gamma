@@ -18,15 +18,15 @@
   * sleep current: 0.2 µA
   * price: 6.05 EUR
 
-### Si7006
-  * manufacturer: Silicon Labs
-  * manufacturer id: SI7006-A20-IM
-  * digi-key id: [336-3124-ND](https://www.digikey.de/product-detail/de/silicon-labs/SI7006-A20-IM/336-3124-ND)
-  * [datasheet](https://www.silabs.com/Support%20Documents%2fTechnicalDocs%2fSi7006-A20.pdf)
-  * sleep current: 0.06 µA
-  * price: 1.74 EUR
+### sensor
+  * manufacturer: Sensirion AG
+  * manufacturer id: SHTC3
+  * digi-key id: [1649-1105-1-ND](https://www.digikey.de/product-detail/de/sensirion-ag/SHTC3/1649-1105-1-ND/9477852)
+  * [datasheet](https://media.digikey.com/pdf/Data%20Sheets/Sensirion%20PDFs/SHTC3_Prelim.pdf)
+  * sleep current: 0.3 µA
+  * price: 3.67 EUR
 
-### Antenna
+### antenna
   * manufacturer: Yageo
   * manufacturer id: ANT1204F002R0433A
   * digi-key id: [311-1570-1-ND](https://www.digikey.de/product-detail/de/yageo/ANT1204F002R0433A/311-1570-1-ND)
@@ -37,11 +37,11 @@
 
 ### Sleep
 
-about 0.8 µA
+about 1 µA
 
 CR2032: about 230 mAh
 
-about 30 y of sleep
+about 25 y of sleep
 
 ## Price
 
