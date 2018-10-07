@@ -42,8 +42,6 @@
 #define __MAIN_H__
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx.h"
-#include "stm32l0xx_ll_i2c.h"
 #include "stm32l0xx_ll_crs.h"
 #include "stm32l0xx_ll_rcc.h"
 #include "stm32l0xx_ll_bus.h"
@@ -54,6 +52,7 @@
 #include "stm32l0xx_ll_pwr.h"
 #include "stm32l0xx_ll_dma.h"
 #include "stm32l0xx_ll_spi.h"
+#include "stm32l0xx.h"
 #include "stm32l0xx_ll_gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -61,6 +60,21 @@
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
+
+#define RFM_DIO5_Pin LL_GPIO_PIN_2
+#define RFM_DIO5_GPIO_Port GPIOA
+#define RFM_RESET_Pin LL_GPIO_PIN_3
+#define RFM_RESET_GPIO_Port GPIOA
+#define RFM_DIO3_Pin LL_GPIO_PIN_8
+#define RFM_DIO3_GPIO_Port GPIOA
+#define RFM_DIO4_Pin LL_GPIO_PIN_9
+#define RFM_DIO4_GPIO_Port GPIOA
+#define RFM_DIO0_Pin LL_GPIO_PIN_10
+#define RFM_DIO0_GPIO_Port GPIOA
+#define RFM_DIO1_Pin LL_GPIO_PIN_11
+#define RFM_DIO1_GPIO_Port GPIOA
+#define RFM_DIO2_Pin LL_GPIO_PIN_12
+#define RFM_DIO2_GPIO_Port GPIOA
 
 /* ########################## Assert Selection ############################## */
 /**

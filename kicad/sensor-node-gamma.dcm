@@ -1,14 +1,5 @@
 EESchema-DOCLIB  Version 2.0
 #
-$CMP Battery
-D single battery cell
-$ENDCMP
-#
-$CMP Battery_Cell
-D battery
-K battery cell
-$ENDCMP
-#
 $CMP Custom_Battery
 D single battery cell
 $ENDCMP
