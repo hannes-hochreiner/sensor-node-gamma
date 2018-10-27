@@ -44,12 +44,14 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_ll_spi.h"
+#include "stm32l0xx_hal.h"
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+
+extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN Private defines */
 
