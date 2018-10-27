@@ -52,6 +52,9 @@ void HardFault_Handler(void);
 void SVC_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
+void I2C1_IRQHandler(void);
+void SPI1_IRQHandler(void);
+void AES_RNG_LPUART1_IRQHandler(void);
 
 #ifdef __cplusplus
 }

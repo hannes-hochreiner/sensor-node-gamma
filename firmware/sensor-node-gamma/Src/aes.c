@@ -73,6 +73,10 @@ void HAL_CRYP_MspInit(CRYP_HandleTypeDef* crypHandle)
   /* USER CODE END AES_MspInit 0 */
     /* AES clock enable */
     __HAL_RCC_AES_CLK_ENABLE();
+
+    /* AES interrupt Init */
+    HAL_NVIC_SetPriority(AES_RNG_LPUART1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(AES_RNG_LPUART1_IRQn);
   /* USER CODE BEGIN AES_MspInit 1 */
 
   /* USER CODE END AES_MspInit 1 */
@@ -89,6 +93,9 @@ void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef* crypHandle)
   /* USER CODE END AES_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_AES_CLK_DISABLE();
+
+    /* AES interrupt Deinit */
+    HAL_NVIC_DisableIRQ(AES_RNG_LPUART1_IRQn);
   /* USER CODE BEGIN AES_MspDeInit 1 */
 
   /* USER CODE END AES_MspDeInit 1 */

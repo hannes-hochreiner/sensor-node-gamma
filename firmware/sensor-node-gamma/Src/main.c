@@ -107,11 +107,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    uint32_t i2cTimeout = 1000;
+    uint8_t address = 0x80;
+    uint8_t comWakeUp[] = {0x35, 0x17};
+    HAL_StatusTypeDef status = HAL_OK;
 
+    status = HAL_I2C_Master_Transmit(&hi2c1, address, comWakeUp, 2, i2cTimeout);
+
+    if (status != HAL_OK) {
+      volatile uint8_t tmp = 5;
+    }
+
+    uint8_t comBitRate[] = {0x02};
+    status = HAL_SPI_Transmit(&hspi1, comBitRate, 1, 1000);
+    uint8_t dataBitRate;
+    status = HAL_SPI_Receive(&hspi1, &dataBitRate, 1, 1000);
+
+    if (status != HAL_OK) {
+      volatile uint8_t tmp = 5;
+    }
+
+    HAL_Delay(500);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 
