@@ -125,24 +125,29 @@ int main(void)
     uint8_t comSleep[] = {0xB0, 0x98};
     status = HAL_I2C_Master_Transmit(&hi2c1, address, comSleep, 2, 1000);
 
+    volatile uint16_t doubleTemp = (values[0] << 8) + values[1];
+    volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
+    volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
+
     if (status != HAL_OK) {
       volatile uint8_t tmp = 5;
     }
 
-    HAL_GPIO_WritePin(RFM_RESET_GPIO_Port, RFM_RESET_Pin, GPIO_PIN_RESET);
+    LL_GPIO_SetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
+    LL_GPIO_ResetOutputPin(RFM_RESET_GPIO_Port, RFM_RESET_Pin);
     LL_mDelay(1);
-    HAL_GPIO_WritePin(RFM_RESET_GPIO_Port, RFM_RESET_Pin, GPIO_PIN_SET);
-    LL_mDelay(15);
+    LL_GPIO_SetOutputPin(RFM_RESET_GPIO_Port, RFM_RESET_Pin);
+    LL_mDelay(10);
 
-    uint8_t comBitRate[] = {0x02};
-    status = HAL_SPI_Transmit(&hspi1, comBitRate, 1, 1000);
+    uint16_t dataSize = 2;
+    uint8_t dataTx[] = {0x05};
+    uint8_t dataRx[2];
 
-    if (status != HAL_OK) {
-      volatile uint8_t tmp = 5;
-    }
+    LL_GPIO_ResetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
+    status = HAL_SPI_TransmitReceive(&hspi1, dataTx, dataRx, dataSize, 1000);
+    LL_GPIO_SetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
 
-    volatile uint8_t dataBitRate;
-    status = HAL_SPI_Receive(&hspi1, &dataBitRate, 1, 1000);
+    volatile uint8_t data = dataRx[1];
 
     if (status != HAL_OK) {
       volatile uint8_t tmp = 5;
@@ -192,7 +197,7 @@ void SystemClock_Config(void)
   }
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
 
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
