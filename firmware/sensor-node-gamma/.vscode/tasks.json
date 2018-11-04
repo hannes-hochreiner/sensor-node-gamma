@@ -27,7 +27,10 @@
         "reveal": "never",
         "focus": false,
         "panel": "shared"
-      }
+      },
+      "dependsOn":[
+        "build using make"
+      ]
     },
     {
       "label": "remove openocd config",

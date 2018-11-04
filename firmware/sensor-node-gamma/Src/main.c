@@ -100,60 +100,63 @@ int main(void)
   MX_SPI1_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  rfm9x_t rfm98;
+  RFM98Glue_Init(&rfm98);
+  RFM9X_Init(&rfm98);
+  uint8_t syncWord[] = {0x46, 0xA5, 0xE3};
+  RFM9X_SetSyncWord(&rfm98, syncWord, 3);
+  uint8_t power = 0x08;
+  RFM9X_SetPower(&rfm98, &power);
 
+  rfm9x_flags_t flags;
+  RFM9X_GetFlags(&rfm98, &flags);
+
+  rfm9x_mode_t setMode = RFM9X_MODE_TRANSMIT;
+  RFM9X_SetMode(&rfm98, &setMode);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    uint32_t i2cTimeout = 1000;
-    uint8_t address = 0xE0;
-    uint8_t comWakeUp[] = {0x35, 0x17};
-    volatile HAL_StatusTypeDef status = HAL_OK;
+    // uint32_t i2cTimeout = 1000;
+    // uint8_t address = 0xE0;
+    // uint8_t comWakeUp[] = {0x35, 0x17};
+    // volatile HAL_StatusTypeDef status = HAL_OK;
 
-    uint8_t comWake[] = {0x35, 0x17};
-    status = HAL_I2C_Master_Transmit(&hi2c1, address, comWake, 2, 1000);
-    LL_mDelay(1);
+    // uint8_t comWake[] = {0x35, 0x17};
+    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comWake, 2, 1000);
+    // LL_mDelay(1);
 
-    uint8_t comMeas[] = {0x7C, 0xA2};
-    status = HAL_I2C_Master_Transmit(&hi2c1, address, comMeas, 2, 1000);
+    // uint8_t comMeas[] = {0x7C, 0xA2};
+    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comMeas, 2, 1000);
     
-    uint8_t values[6];
-    status = HAL_I2C_Master_Receive(&hi2c1, address, values, 6, 1000);
+    // uint8_t values[6];
+    // status = HAL_I2C_Master_Receive(&hi2c1, address, values, 6, 1000);
 
-    uint8_t comSleep[] = {0xB0, 0x98};
-    status = HAL_I2C_Master_Transmit(&hi2c1, address, comSleep, 2, 1000);
+    // uint8_t comSleep[] = {0xB0, 0x98};
+    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comSleep, 2, 1000);
 
-    volatile uint16_t doubleTemp = (values[0] << 8) + values[1];
-    volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
-    volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
+    // volatile uint16_t doubleTemp = (values[0] << 8) + values[1];
+    // volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
+    // volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
 
-    if (status != HAL_OK) {
-      volatile uint8_t tmp = 5;
-    }
+    // if (status != HAL_OK) {
+    //   volatile uint8_t tmp = 5;
+    // }
 
-    LL_GPIO_SetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
-    LL_GPIO_ResetOutputPin(RFM_RESET_GPIO_Port, RFM_RESET_Pin);
-    LL_mDelay(1);
-    LL_GPIO_SetOutputPin(RFM_RESET_GPIO_Port, RFM_RESET_Pin);
+    uint8_t text[] = "Hello World!";
+    RFM9X_WriteMessage(&rfm98, text, 12);
     LL_mDelay(10);
 
-    uint16_t dataSize = 2;
-    uint8_t dataTx[] = {0x05};
-    uint8_t dataRx[2];
+    RFM9X_GetFlags(&rfm98, &flags);
 
-    LL_GPIO_ResetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
-    status = HAL_SPI_TransmitReceive(&hspi1, dataTx, dataRx, dataSize, 1000);
-    LL_GPIO_SetOutputPin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
-
-    volatile uint8_t data = dataRx[1];
-
-    if (status != HAL_OK) {
-      volatile uint8_t tmp = 5;
+    while(!(flags & RFM9X_FLAG_PACKET_SENT)) {
+      LL_mDelay(1);
+      RFM9X_GetFlags(&rfm98, &flags);
     }
 
-    LL_mDelay(500);
+    LL_mDelay(1000);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */

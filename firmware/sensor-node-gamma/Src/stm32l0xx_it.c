@@ -42,7 +42,6 @@
 /* External variables --------------------------------------------------------*/
 extern CRYP_HandleTypeDef hcryp;
 extern I2C_HandleTypeDef hi2c1;
-extern SPI_HandleTypeDef hspi1;
 
 /******************************************************************************/
 /*            Cortex-M0+ Processor Interruption and Exception Handlers         */ 
@@ -153,7 +152,6 @@ void SPI1_IRQHandler(void)
   /* USER CODE BEGIN SPI1_IRQn 0 */
 
   /* USER CODE END SPI1_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 1 */
 
   /* USER CODE END SPI1_IRQn 1 */
