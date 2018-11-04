@@ -44,14 +44,13 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
+#include "stm32l0xx.h"
+#include "stm32l0xx_ll_i2c.h"
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
-
-extern I2C_HandleTypeDef hi2c1;
 
 /* USER CODE BEGIN Private defines */
 

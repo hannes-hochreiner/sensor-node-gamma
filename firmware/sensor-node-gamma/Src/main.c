@@ -119,34 +119,48 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // uint32_t i2cTimeout = 1000;
-    // uint8_t address = 0xE0;
-    // uint8_t comWakeUp[] = {0x35, 0x17};
-    // volatile HAL_StatusTypeDef status = HAL_OK;
+    LL_I2C_Enable(I2C1);
+    uint8_t address = 0xE0;
 
-    // uint8_t comWake[] = {0x35, 0x17};
-    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comWake, 2, 1000);
-    // LL_mDelay(1);
+    uint8_t comWake[] = {0x35, 0x17};
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comWake[0]);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comWake[1]);
+    LL_mDelay(1);
 
-    // uint8_t comMeas[] = {0x7C, 0xA2};
-    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comMeas, 2, 1000);
+    uint8_t comMeas[] = {0x7C, 0xA2};
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comMeas[0]);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comMeas[1]);
     
-    // uint8_t values[6];
-    // status = HAL_I2C_Master_Receive(&hi2c1, address, values, 6, 1000);
+    uint8_t i2cSize = 6;
+    uint8_t values[i2cSize];
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
+    for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
+      while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
+      values[cntr] = LL_I2C_ReceiveData8(I2C1);
+    }
 
-    // uint8_t comSleep[] = {0xB0, 0x98};
-    // status = HAL_I2C_Master_Transmit(&hi2c1, address, comSleep, 2, 1000);
+    volatile uint32_t i2cStatus = LL_I2C_IsActiveFlag_BERR(I2C1);
 
-    // volatile uint16_t doubleTemp = (values[0] << 8) + values[1];
-    // volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
-    // volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
+    uint8_t comSleep[] = {0xB0, 0x98};
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comSleep[0]);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comSleep[1]);
 
-    // if (status != HAL_OK) {
-    //   volatile uint8_t tmp = 5;
-    // }
+    LL_I2C_Disable(I2C1);
+    volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
+    volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
 
-    uint8_t text[] = "Hello World!";
-    RFM9X_WriteMessage(&rfm98, text, 12);
+    // uint8_t text[] = "Hello World!";
+    // RFM9X_WriteMessage(&rfm98, text, 12);
+    RFM9X_WriteMessage(&rfm98, values, 6);
     LL_mDelay(10);
 
     RFM9X_GetFlags(&rfm98, &flags);
