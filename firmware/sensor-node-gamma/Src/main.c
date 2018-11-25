@@ -215,6 +215,40 @@ int main(void)
       ._rng = HAL_GetTick() ^ (((uint16_t)values[1] << 8) + values[4])
     };
 
+    // encrypt start
+    // size_t dataSize = sizeof(message_0001_t);
+    size_t dataSize = 32;
+    uint8_t dataPlain[dataSize] __attribute__ ((aligned (32)));
+    // uint8_t dataPlainNew[dataSize] __attribute__ ((aligned (32)));
+    uint8_t dataCrypt[dataSize] __attribute__ ((aligned (32)));
+
+    memcpy(dataPlain, &msg, dataSize);
+    volatile HAL_StatusTypeDef statusCrypt = HAL_CRYP_Init(&hcryp);
+
+    if (statusCrypt != HAL_OK) {
+      volatile uint8_t tmp = 0;
+    }
+
+    statusCrypt = HAL_CRYP_AESECB_Encrypt(&hcryp, dataPlain, dataSize, dataCrypt, 1000);
+
+    if (statusCrypt != HAL_OK) {
+      volatile uint8_t tmp = 0;
+    }
+
+    HAL_CRYP_DeInit(&hcryp);
+    // HAL_CRYP_Init(&hcryp);
+    
+    // statusCrypt = HAL_CRYP_AESECB_Decrypt(&hcryp, dataCrypt, dataSize, dataPlainNew, 1000);
+
+    // if (statusCrypt != HAL_OK) {
+    //   volatile uint8_t tmp = 0;
+    // }
+    // HAL_CRYP_DeInit(&hcryp);
+
+    // volatile message_0001_t msgNew;
+    // memcpy(&msgNew, dataPlainNew, dataSize);
+    // encrypt end
+
     // uint8_t text[] = "Hello World!";
     // RFM9X_WriteMessage(&rfm98, text, 12);
     RFM9X_WriteMessage(&rfm98, values, 6);

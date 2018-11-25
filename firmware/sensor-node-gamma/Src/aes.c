@@ -46,15 +46,15 @@
 
 CRYP_HandleTypeDef hcryp;
 __ALIGN_BEGIN static const uint8_t pKeyAES[16] __ALIGN_END = {
-                            0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-                            0x00,0x00,0x00,0x00,0x00,0x00};
+                            0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88,0x99,0x00,
+                            0x11,0x22,0x33,0x44,0x55,0x66};
 
 /* AES init function */
 void MX_AES_Init(void)
 {
 
   hcryp.Instance = AES;
-  hcryp.Init.DataType = CRYP_DATATYPE_32B;
+  hcryp.Init.DataType = CRYP_DATATYPE_8B;
   hcryp.Init.pKey = (uint8_t *)pKeyAES;
   if (HAL_CRYP_Init(&hcryp) != HAL_OK)
   {
