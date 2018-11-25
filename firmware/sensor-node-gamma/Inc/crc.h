@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
+  * File Name          : CRC.h
+  * Description        : This file provides code for the configuration
+  *                      of the CRC instances.
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -36,72 +36,44 @@
   *
   ******************************************************************************
   */
-
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __crc_H
+#define __crc_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_ll_crc.h"
-#include "stm32l0xx.h"
-#include "stm32l0xx_ll_i2c.h"
-#include "stm32l0xx_ll_crs.h"
-#include "stm32l0xx_ll_rcc.h"
-#include "stm32l0xx_ll_bus.h"
-#include "stm32l0xx_ll_system.h"
-#include "stm32l0xx_ll_exti.h"
-#include "stm32l0xx_ll_cortex.h"
-#include "stm32l0xx_ll_utils.h"
-#include "stm32l0xx_ll_pwr.h"
-#include "stm32l0xx_ll_dma.h"
-#include "stm32l0xx_ll_spi.h"
-#include "stm32l0xx_ll_gpio.h"
+#include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include "rfm.h"
-#include "message.h"
+
 /* USER CODE END Includes */
-
-/* Private define ------------------------------------------------------------*/
-
-#define RFM_DIO5_Pin LL_GPIO_PIN_2
-#define RFM_DIO5_GPIO_Port GPIOA
-#define RFM_RESET_Pin LL_GPIO_PIN_3
-#define RFM_RESET_GPIO_Port GPIOA
-#define SPI1_NSS_Pin LL_GPIO_PIN_4
-#define SPI1_NSS_GPIO_Port GPIOA
-#define RFM_DIO3_Pin LL_GPIO_PIN_8
-#define RFM_DIO3_GPIO_Port GPIOA
-#define RFM_DIO4_Pin LL_GPIO_PIN_9
-#define RFM_DIO4_GPIO_Port GPIOA
-#define RFM_DIO0_Pin LL_GPIO_PIN_10
-#define RFM_DIO0_GPIO_Port GPIOA
-#define RFM_DIO1_Pin LL_GPIO_PIN_11
-#define RFM_DIO1_GPIO_Port GPIOA
-#define RFM_DIO2_Pin LL_GPIO_PIN_12
-#define RFM_DIO2_GPIO_Port GPIOA
-
-/* ########################## Assert Selection ############################## */
-/**
-  * @brief Uncomment the line below to expanse the "assert_param" macro in the 
-  *        HAL drivers code
-  */
-/* #define USE_FULL_ASSERT    1U */
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-#ifdef __cplusplus
- extern "C" {
-#endif
-void _Error_Handler(char *, int);
+extern void _Error_Handler(char *, int);
 
-#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
+void MX_CRC_Init(void);
+
+/* USER CODE BEGIN Prototypes */
+
+/* USER CODE END Prototypes */
+
 #ifdef __cplusplus
 }
 #endif
+#endif /*__ crc_H */
 
-#endif /* __MAIN_H__ */
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -40,6 +40,7 @@
 #include "main.h"
 #include "stm32l0xx_hal.h"
 #include "aes.h"
+#include "crc.h"
 #include "i2c.h"
 #include "spi.h"
 #include "gpio.h"
@@ -99,7 +100,9 @@ int main(void)
   MX_AES_Init();
   MX_SPI1_Init();
   MX_I2C1_Init();
+  MX_CRC_Init();
   /* USER CODE BEGIN 2 */
+  uint32_t message_index = 0;
   rfm9x_t rfm98;
   RFM98Glue_Init(&rfm98);
   RFM9X_Init(&rfm98);
@@ -155,8 +158,20 @@ int main(void)
     LL_I2C_TransmitData8(I2C1, comSleep[1]);
 
     LL_I2C_Disable(I2C1);
-    volatile double valTemp = 175 * ((double)((values[0] << 8) + values[1]) / (1 << 16)) - 45;
-    volatile double valHum = 100 * ((double)((values[3] << 8) + values[4]) / (1 << 16));
+    volatile double valTemp = 175 * ((double)(((uint16_t)values[0] << 8) + values[1]) / (1 << 16)) - 45;
+    volatile double valHum = 100 * ((double)(((uint16_t)values[3] << 8) + values[4]) / (1 << 16));
+
+    volatile message_0001_t msg = {
+      .type = 0x0001,
+      .mcu_id_1 = LL_GetUID_Word0(),
+      .mcu_id_2 = LL_GetUID_Word1(),
+      .mcu_id_3 = LL_GetUID_Word2(),
+      .message_index = ++message_index,
+      .sensor_id = 0,
+      .temperature = (float)valTemp,
+      .humidity = (float)valHum,
+      ._rng = HAL_GetTick() ^ (((uint16_t)values[1] << 8) + values[4])
+    };
 
     // uint8_t text[] = "Hello World!";
     // RFM9X_WriteMessage(&rfm98, text, 12);

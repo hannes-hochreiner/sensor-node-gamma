@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
+  * File Name          : CRC.c
+  * Description        : This file provides code for the configuration
+  *                      of the CRC instances.
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -37,71 +37,42 @@
   ******************************************************************************
   */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H__
-#define __MAIN_H__
-
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_ll_crc.h"
-#include "stm32l0xx.h"
-#include "stm32l0xx_ll_i2c.h"
-#include "stm32l0xx_ll_crs.h"
-#include "stm32l0xx_ll_rcc.h"
-#include "stm32l0xx_ll_bus.h"
-#include "stm32l0xx_ll_system.h"
-#include "stm32l0xx_ll_exti.h"
-#include "stm32l0xx_ll_cortex.h"
-#include "stm32l0xx_ll_utils.h"
-#include "stm32l0xx_ll_pwr.h"
-#include "stm32l0xx_ll_dma.h"
-#include "stm32l0xx_ll_spi.h"
-#include "stm32l0xx_ll_gpio.h"
+#include "crc.h"
 
-/* USER CODE BEGIN Includes */
-#include "rfm.h"
-#include "message.h"
-/* USER CODE END Includes */
+/* USER CODE BEGIN 0 */
 
-/* Private define ------------------------------------------------------------*/
+/* USER CODE END 0 */
 
-#define RFM_DIO5_Pin LL_GPIO_PIN_2
-#define RFM_DIO5_GPIO_Port GPIOA
-#define RFM_RESET_Pin LL_GPIO_PIN_3
-#define RFM_RESET_GPIO_Port GPIOA
-#define SPI1_NSS_Pin LL_GPIO_PIN_4
-#define SPI1_NSS_GPIO_Port GPIOA
-#define RFM_DIO3_Pin LL_GPIO_PIN_8
-#define RFM_DIO3_GPIO_Port GPIOA
-#define RFM_DIO4_Pin LL_GPIO_PIN_9
-#define RFM_DIO4_GPIO_Port GPIOA
-#define RFM_DIO0_Pin LL_GPIO_PIN_10
-#define RFM_DIO0_GPIO_Port GPIOA
-#define RFM_DIO1_Pin LL_GPIO_PIN_11
-#define RFM_DIO1_GPIO_Port GPIOA
-#define RFM_DIO2_Pin LL_GPIO_PIN_12
-#define RFM_DIO2_GPIO_Port GPIOA
+/* CRC init function */
+void MX_CRC_Init(void)
+{
 
-/* ########################## Assert Selection ############################## */
-/**
-  * @brief Uncomment the line below to expanse the "assert_param" macro in the 
-  *        HAL drivers code
-  */
-/* #define USE_FULL_ASSERT    1U */
+  /* Peripheral clock enable */
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);
 
-/* USER CODE BEGIN Private defines */
+  LL_CRC_SetInputDataReverseMode(CRC, LL_CRC_INDATA_REVERSE_NONE);
 
-/* USER CODE END Private defines */
+  LL_CRC_SetOutputDataReverseMode(CRC, LL_CRC_OUTDATA_REVERSE_NONE);
 
-#ifdef __cplusplus
- extern "C" {
-#endif
-void _Error_Handler(char *, int);
+  LL_CRC_SetPolynomialCoef(CRC, LL_CRC_DEFAULT_CRC32_POLY);
 
-#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
-#ifdef __cplusplus
+  LL_CRC_SetPolynomialSize(CRC, LL_CRC_POLYLENGTH_32B);
+
+  LL_CRC_SetInitialData(CRC, LL_CRC_DEFAULT_CRC_INITVALUE);
+
 }
-#endif
 
-#endif /* __MAIN_H__ */
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
