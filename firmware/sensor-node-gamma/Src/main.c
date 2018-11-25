@@ -158,6 +158,26 @@ int main(void)
     LL_I2C_TransmitData8(I2C1, comSleep[1]);
 
     LL_I2C_Disable(I2C1);
+
+    // check crc start
+    LL_CRC_SetPolynomialSize(CRC, LL_CRC_POLYLENGTH_8B);
+    LL_CRC_SetInitialData(CRC, 0xFF);
+    LL_CRC_SetPolynomialCoef(CRC, 0x31);
+    LL_CRC_ResetCRCCalculationUnit(CRC);
+    LL_CRC_FeedData16(CRC, ((uint16_t)values[0] << 8) + values[1]);
+
+    if (values[2] != LL_CRC_ReadData8(CRC)) {
+      volatile uint8_t tmp = 0x00;
+    }
+
+    LL_CRC_ResetCRCCalculationUnit(CRC);
+    LL_CRC_FeedData16(CRC, ((uint16_t)values[3] << 8) + values[4]);
+
+    if (values[5] != LL_CRC_ReadData8(CRC)) {
+      volatile uint8_t tmp = 0x00;
+    }
+    // check crc end
+
     volatile double valTemp = 175 * ((double)(((uint16_t)values[0] << 8) + values[1]) / (1 << 16)) - 45;
     volatile double valHum = 100 * ((double)(((uint16_t)values[3] << 8) + values[4]) / (1 << 16));
 
