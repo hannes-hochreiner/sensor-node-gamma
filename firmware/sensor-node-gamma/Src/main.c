@@ -131,7 +131,22 @@ int main(void)
     LL_I2C_TransmitData8(I2C1, comWake[0]);
     while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
     LL_I2C_TransmitData8(I2C1, comWake[1]);
-    LL_mDelay(1);
+    // LL_mDelay(1);
+
+    uint8_t comId[] = {0xEF, 0xC8};
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comId[0]);
+    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    LL_I2C_TransmitData8(I2C1, comId[1]);
+
+    uint8_t i2cSize = 3;
+    uint8_t valuesId[i2cSize];
+    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
+    for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
+      while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
+      valuesId[cntr] = LL_I2C_ReceiveData8(I2C1);
+    }
 
     uint8_t comMeas[] = {0x7C, 0xA2};
     LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
@@ -140,7 +155,7 @@ int main(void)
     while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
     LL_I2C_TransmitData8(I2C1, comMeas[1]);
     
-    uint8_t i2cSize = 6;
+    i2cSize = 6;
     uint8_t values[i2cSize];
     LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
     for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
@@ -176,6 +191,13 @@ int main(void)
     if (values[5] != LL_CRC_ReadData8(CRC)) {
       volatile uint8_t tmp = 0x00;
     }
+
+    LL_CRC_ResetCRCCalculationUnit(CRC);
+    LL_CRC_FeedData16(CRC, ((uint16_t)valuesId[0] << 8) + valuesId[1]);
+
+    if (valuesId[2] != LL_CRC_ReadData8(CRC)) {
+      volatile uint8_t tmp = 0x00;
+    }
     // check crc end
 
     volatile double valTemp = 175 * ((double)(((uint16_t)values[0] << 8) + values[1]) / (1 << 16)) - 45;
@@ -187,7 +209,7 @@ int main(void)
       .mcu_id_2 = LL_GetUID_Word1(),
       .mcu_id_3 = LL_GetUID_Word2(),
       .message_index = ++message_index,
-      .sensor_id = 0,
+      .sensor_id = (((uint16_t)valuesId[0] << 8) + valuesId[1]),
       .temperature = (float)valTemp,
       .humidity = (float)valHum,
       ._rng = HAL_GetTick() ^ (((uint16_t)values[1] << 8) + values[4])
