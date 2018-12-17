@@ -40,8 +40,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "spi.h"
 
-#include "gpio.h"
-
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -49,12 +47,14 @@
 /* SPI1 init function */
 void MX_SPI1_Init(void)
 {
-  LL_SPI_InitTypeDef SPI_InitStruct;
+  LL_SPI_InitTypeDef SPI_InitStruct = {0};
 
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
   
+  LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);
+  LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOB);
   /**SPI1 GPIO Configuration  
   PA5   ------> SPI1_SCK
   PA7   ------> SPI1_MOSI
@@ -99,7 +99,6 @@ void MX_SPI1_Init(void)
   SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
   SPI_InitStruct.CRCPoly = 7;
   LL_SPI_Init(SPI1, &SPI_InitStruct);
-
   LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
 
 }
@@ -107,13 +106,5 @@ void MX_SPI1_Init(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

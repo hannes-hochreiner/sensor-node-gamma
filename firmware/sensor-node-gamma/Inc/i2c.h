@@ -44,8 +44,6 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx.h"
-#include "stm32l0xx_ll_i2c.h"
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
@@ -55,8 +53,6 @@
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-
-extern void _Error_Handler(char *, int);
 
 void MX_I2C1_Init(void);
 

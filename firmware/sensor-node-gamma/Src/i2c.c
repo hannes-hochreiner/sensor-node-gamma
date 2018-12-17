@@ -40,8 +40,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "i2c.h"
 
-#include "gpio.h"
-
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -49,10 +47,11 @@
 /* I2C1 init function */
 void MX_I2C1_Init(void)
 {
-  LL_I2C_InitTypeDef I2C_InitStruct;
+  LL_I2C_InitTypeDef I2C_InitStruct = {0};
 
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
+  LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOB);
   /**I2C1 GPIO Configuration  
   PB6   ------> I2C1_SCL
   PB7   ------> I2C1_SDA 
@@ -80,16 +79,12 @@ void MX_I2C1_Init(void)
   NVIC_SetPriority(I2C1_IRQn, 0);
   NVIC_EnableIRQ(I2C1_IRQn);
 
-    /**I2C Initialization 
-    */
+  /**I2C Initialization 
+  */
   LL_I2C_EnableAutoEndMode(I2C1);
-
   LL_I2C_DisableOwnAddress2(I2C1);
-
   LL_I2C_DisableGeneralCall(I2C1);
-
   LL_I2C_EnableClockStretching(I2C1);
-
   I2C_InitStruct.PeripheralMode = LL_I2C_MODE_I2C;
   I2C_InitStruct.Timing = 0x00403D5A;
   I2C_InitStruct.AnalogFilter = LL_I2C_ANALOGFILTER_ENABLE;
@@ -98,7 +93,6 @@ void MX_I2C1_Init(void)
   I2C_InitStruct.TypeAcknowledge = LL_I2C_ACK;
   I2C_InitStruct.OwnAddrSize = LL_I2C_OWNADDRESS1_7BIT;
   LL_I2C_Init(I2C1, &I2C_InitStruct);
-
   LL_I2C_SetOwnAddress2(I2C1, 0, LL_I2C_OWNADDRESS2_NOMASK);
 
 }
@@ -106,13 +100,5 @@ void MX_I2C1_Init(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

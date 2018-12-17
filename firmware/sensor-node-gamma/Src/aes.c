@@ -58,7 +58,7 @@ void MX_AES_Init(void)
   hcryp.Init.pKey = (uint8_t *)pKeyAES;
   if (HAL_CRYP_Init(&hcryp) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
 
 }
@@ -105,13 +105,5 @@ void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef* crypHandle)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
