@@ -108,7 +108,7 @@ int main(void)
   RFM9X_Init(&rfm98);
   uint8_t syncWord[] = {0x46, 0xA5, 0xE3};
   RFM9X_SetSyncWord(&rfm98, syncWord, 3);
-  uint8_t power = 0x08;
+  uint8_t power = 0x0f;
   RFM9X_SetPower(&rfm98, &power);
 
   rfm9x_flags_t flags;
@@ -122,120 +122,120 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    LL_I2C_Enable(I2C1);
-    uint8_t address = 0xE0;
+    // LL_I2C_Enable(I2C1);
+    // uint8_t address = 0xE0;
 
-    uint8_t comWake[] = {0x35, 0x17};
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comWake[0]);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comWake[1]);
-    // LL_mDelay(1);
+    // uint8_t comWake[] = {0x35, 0x17};
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comWake[0]);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comWake[1]);
+    // // LL_mDelay(1);
 
-    uint8_t comId[] = {0xEF, 0xC8};
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comId[0]);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comId[1]);
+    // uint8_t comId[] = {0xEF, 0xC8};
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comId[0]);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comId[1]);
 
-    uint8_t i2cSize = 3;
-    uint8_t valuesId[i2cSize];
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
-    for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
-      while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
-      valuesId[cntr] = LL_I2C_ReceiveData8(I2C1);
-    }
+    // uint8_t i2cSize = 3;
+    // uint8_t valuesId[i2cSize];
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
+    // for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
+    //   while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
+    //   valuesId[cntr] = LL_I2C_ReceiveData8(I2C1);
+    // }
 
-    uint8_t comMeas[] = {0x7C, 0xA2};
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comMeas[0]);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comMeas[1]);
+    // uint8_t comMeas[] = {0x7C, 0xA2};
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comMeas[0]);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comMeas[1]);
     
-    i2cSize = 6;
-    uint8_t values[i2cSize];
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
-    for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
-      while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
-      values[cntr] = LL_I2C_ReceiveData8(I2C1);
-    }
+    // i2cSize = 6;
+    // uint8_t values[i2cSize];
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, i2cSize, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
+    // for (uint8_t cntr = 0; cntr < i2cSize; cntr++) {
+    //   while (!LL_I2C_IsActiveFlag_RXNE(I2C1)) {}
+    //   values[cntr] = LL_I2C_ReceiveData8(I2C1);
+    // }
 
-    volatile uint32_t i2cStatus = LL_I2C_IsActiveFlag_BERR(I2C1);
+    // volatile uint32_t i2cStatus = LL_I2C_IsActiveFlag_BERR(I2C1);
 
-    uint8_t comSleep[] = {0xB0, 0x98};
-    LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comSleep[0]);
-    while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
-    LL_I2C_TransmitData8(I2C1, comSleep[1]);
+    // uint8_t comSleep[] = {0xB0, 0x98};
+    // LL_I2C_HandleTransfer(I2C1, address, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comSleep[0]);
+    // while (!LL_I2C_IsActiveFlag_TXIS(I2C1)) {}
+    // LL_I2C_TransmitData8(I2C1, comSleep[1]);
 
-    LL_I2C_Disable(I2C1);
+    // LL_I2C_Disable(I2C1);
 
-    // check crc start
-    LL_CRC_SetPolynomialSize(CRC, LL_CRC_POLYLENGTH_8B);
-    LL_CRC_SetInitialData(CRC, 0xFF);
-    LL_CRC_SetPolynomialCoef(CRC, 0x31);
-    LL_CRC_ResetCRCCalculationUnit(CRC);
-    LL_CRC_FeedData16(CRC, ((uint16_t)values[0] << 8) + values[1]);
+    // // check crc start
+    // LL_CRC_SetPolynomialSize(CRC, LL_CRC_POLYLENGTH_8B);
+    // LL_CRC_SetInitialData(CRC, 0xFF);
+    // LL_CRC_SetPolynomialCoef(CRC, 0x31);
+    // LL_CRC_ResetCRCCalculationUnit(CRC);
+    // LL_CRC_FeedData16(CRC, ((uint16_t)values[0] << 8) + values[1]);
 
-    if (values[2] != LL_CRC_ReadData8(CRC)) {
-      volatile uint8_t tmp = 0x00;
-    }
+    // if (values[2] != LL_CRC_ReadData8(CRC)) {
+    //   volatile uint8_t tmp = 0x00;
+    // }
 
-    LL_CRC_ResetCRCCalculationUnit(CRC);
-    LL_CRC_FeedData16(CRC, ((uint16_t)values[3] << 8) + values[4]);
+    // LL_CRC_ResetCRCCalculationUnit(CRC);
+    // LL_CRC_FeedData16(CRC, ((uint16_t)values[3] << 8) + values[4]);
 
-    if (values[5] != LL_CRC_ReadData8(CRC)) {
-      volatile uint8_t tmp = 0x00;
-    }
+    // if (values[5] != LL_CRC_ReadData8(CRC)) {
+    //   volatile uint8_t tmp = 0x00;
+    // }
 
-    LL_CRC_ResetCRCCalculationUnit(CRC);
-    LL_CRC_FeedData16(CRC, ((uint16_t)valuesId[0] << 8) + valuesId[1]);
+    // LL_CRC_ResetCRCCalculationUnit(CRC);
+    // LL_CRC_FeedData16(CRC, ((uint16_t)valuesId[0] << 8) + valuesId[1]);
 
-    if (valuesId[2] != LL_CRC_ReadData8(CRC)) {
-      volatile uint8_t tmp = 0x00;
-    }
-    // check crc end
+    // if (valuesId[2] != LL_CRC_ReadData8(CRC)) {
+    //   volatile uint8_t tmp = 0x00;
+    // }
+    // // check crc end
 
-    volatile double valTemp = 175 * ((double)(((uint16_t)values[0] << 8) + values[1]) / (1 << 16)) - 45;
-    volatile double valHum = 100 * ((double)(((uint16_t)values[3] << 8) + values[4]) / (1 << 16));
+    // volatile double valTemp = 175 * ((double)(((uint16_t)values[0] << 8) + values[1]) / (1 << 16)) - 45;
+    // volatile double valHum = 100 * ((double)(((uint16_t)values[3] << 8) + values[4]) / (1 << 16));
 
-    volatile message_0001_t msg = {
-      .type = 0x0001,
-      .mcu_id_1 = LL_GetUID_Word0(),
-      .mcu_id_2 = LL_GetUID_Word1(),
-      .mcu_id_3 = LL_GetUID_Word2(),
-      .message_index = ++message_index,
-      .sensor_id = (((uint16_t)valuesId[0] << 8) + valuesId[1]),
-      .temperature = (float)valTemp,
-      .humidity = (float)valHum,
-      ._rng = HAL_GetTick() ^ (((uint16_t)values[1] << 8) + values[4])
-    };
+    // volatile message_0001_t msg = {
+    //   .type = 0x0001,
+    //   .mcu_id_1 = LL_GetUID_Word0(),
+    //   .mcu_id_2 = LL_GetUID_Word1(),
+    //   .mcu_id_3 = LL_GetUID_Word2(),
+    //   .message_index = ++message_index,
+    //   .sensor_id = (((uint16_t)valuesId[0] << 8) + valuesId[1]),
+    //   .temperature = (float)valTemp,
+    //   .humidity = (float)valHum,
+    //   ._rng = HAL_GetTick() ^ (((uint16_t)values[1] << 8) + values[4])
+    // };
 
-    // encrypt start
-    // size_t dataSize = sizeof(message_0001_t);
-    size_t dataSize = 32;
-    uint8_t dataPlain[dataSize] __attribute__ ((aligned (32)));
-    // uint8_t dataPlainNew[dataSize] __attribute__ ((aligned (32)));
-    uint8_t dataCrypt[dataSize] __attribute__ ((aligned (32)));
+    // // encrypt start
+    // // size_t dataSize = sizeof(message_0001_t);
+    // size_t dataSize = 32;
+    // uint8_t dataPlain[dataSize] __attribute__ ((aligned (32)));
+    // // uint8_t dataPlainNew[dataSize] __attribute__ ((aligned (32)));
+    // uint8_t dataCrypt[dataSize] __attribute__ ((aligned (32)));
 
-    memcpy(dataPlain, &msg, dataSize);
-    volatile HAL_StatusTypeDef statusCrypt = HAL_CRYP_Init(&hcryp);
+    // memcpy(dataPlain, &msg, dataSize);
+    // volatile HAL_StatusTypeDef statusCrypt = HAL_CRYP_Init(&hcryp);
 
-    if (statusCrypt != HAL_OK) {
-      volatile uint8_t tmp = 0;
-    }
+    // if (statusCrypt != HAL_OK) {
+    //   volatile uint8_t tmp = 0;
+    // }
 
-    statusCrypt = HAL_CRYP_AESECB_Encrypt(&hcryp, dataPlain, dataSize, dataCrypt, 1000);
+    // statusCrypt = HAL_CRYP_AESECB_Encrypt(&hcryp, dataPlain, dataSize, dataCrypt, 1000);
 
-    if (statusCrypt != HAL_OK) {
-      volatile uint8_t tmp = 0;
-    }
+    // if (statusCrypt != HAL_OK) {
+    //   volatile uint8_t tmp = 0;
+    // }
 
-    HAL_CRYP_DeInit(&hcryp);
+    // HAL_CRYP_DeInit(&hcryp);
     // HAL_CRYP_Init(&hcryp);
     
     // statusCrypt = HAL_CRYP_AESECB_Decrypt(&hcryp, dataCrypt, dataSize, dataPlainNew, 1000);
@@ -249,9 +249,9 @@ int main(void)
     // memcpy(&msgNew, dataPlainNew, dataSize);
     // encrypt end
 
-    // uint8_t text[] = "Hello World!";
-    // RFM9X_WriteMessage(&rfm98, text, 12);
-    RFM9X_WriteMessage(&rfm98, values, 6);
+    uint8_t text[] = "Hello World!";
+    RFM9X_WriteMessage(&rfm98, text, 12);
+    // RFM9X_WriteMessage(&rfm98, values, 6);
     LL_mDelay(10);
 
     RFM9X_GetFlags(&rfm98, &flags);

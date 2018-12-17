@@ -22,7 +22,7 @@ TARGET = sensor-node-gamma
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -O3
+OPT = -Og
 
 
 #######################################

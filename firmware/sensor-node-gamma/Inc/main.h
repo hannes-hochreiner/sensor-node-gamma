@@ -58,7 +58,7 @@
 #include "stm32l0xx_ll_gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "rfm.h"
+#include "rfm98_glue.h"
 #include "message.h"
 /* USER CODE END Includes */
 
