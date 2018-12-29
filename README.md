@@ -37,11 +37,30 @@
 
 ### Sleep
 
-about 1 µA
+RFM:
+7 ms @ 120 mA
+rest @ 0.2 µA
 
-CR2032: about 230 mAh
+(7 * 120 + 59993 * .0002) / 60000 = 0.0142 mA
 
-about 25 y of sleep
+STM32:
+20 ms @ 2 mA
+rest @ 1 µA
+
+(20 * 2 + 59980 * 0.001) / 60000 = 0.0017 mA
+
+SHTC3:
+measuring: 12 ms @ 430 µA
+idle: rest @ 0.3 µA
+
+(12 * .43 + 59988 * 0.0003) / 60000 = 0.0004 mA
+
+total: 0.0142 + 0.0017 + 0.0004 = 0.0163 mA
+
+CR2032:
+230 mAh
+
+230 / 0.0163 = 14110 h = 588 d = 1.6 y
 
 ## Price
 
